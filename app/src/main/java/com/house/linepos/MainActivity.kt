@@ -20,8 +20,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             LinePosTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Greeting(
-                        name = "Android",
+                    PosApp(
                         modifier = Modifier.padding(innerPadding)
                     )
                 }
@@ -31,17 +30,12 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
+fun PosApp(modifier: Modifier) {
+    LoginPage()
 }
 
 @Preview(showBackground = true)
 @Composable
-fun GreetingPreview() {
-    LinePosTheme {
-        Greeting("Android")
-    }
+fun PosAppPreview() {
+    PosApp(modifier = Modifier)
 }

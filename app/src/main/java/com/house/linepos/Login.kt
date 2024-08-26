@@ -62,7 +62,9 @@ fun LoginPage() {
             )
         Row(
             horizontalArrangement = Arrangement.SpaceEvenly,
-            modifier = Modifier.width(IntrinsicSize.Min).padding(12.dp)
+            modifier = Modifier
+                .width(IntrinsicSize.Min)
+                .padding(12.dp)
         ) {
             // button: login
             Button(

@@ -24,10 +24,12 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.house.linepos.ui.theme.LinePosTheme
 
 @Composable
-fun LoginPage() {
+fun LoginScreen(navController: NavController) {
     var username by rememberSaveable { mutableStateOf("") }
     var password by rememberSaveable { mutableStateOf("") }
 
@@ -68,7 +70,7 @@ fun LoginPage() {
         ) {
             // button: login
             Button(
-                onClick = { /*TODO*/ },
+                onClick = { /*TODO*/ navController.navigate("main")},
                 modifier = Modifier
                     .weight(1f)
                     .padding(end = 8.dp)
@@ -90,8 +92,9 @@ fun LoginPage() {
 
 @Preview(showBackground = true)
 @Composable
-fun LoginPagePreview() {
+fun LoginScreenPreview() {
+    val navController = rememberNavController()
     LinePosTheme {
-        LoginPage()
+        LoginScreen(navController)
     }
 }

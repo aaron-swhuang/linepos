@@ -62,14 +62,10 @@ fun PosAppPreview() {
 // TODO: Replace main screen with home screen
 @Composable
 fun MainScreen() {
-    val current = LocalDateTime.now()
-    val formatter = DateTimeFormatter.ofLocalizedDateTime(FormatStyle.MEDIUM)
-    val formatted = current.format(formatter)
-
     val navController = rememberNavController()
     Scaffold(
         topBar = {
-            LinePosTopBar(formatted)
+            LinePosTopBar()
         },
         bottomBar = {
             LinePosBottomBar(navController)

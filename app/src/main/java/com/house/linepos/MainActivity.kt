@@ -47,7 +47,7 @@ fun PosApp() {
     LinePosTheme {
         NavHost(navController = navController, startDestination = LoginPage.route) {
             composable(LoginPage.route) { LoginScreen(navController) }
-            composable("main") { MainScreen() }
+            composable(Main.route) { Main.screen() }
         }
     }
 }
@@ -81,23 +81,10 @@ fun MainScreen() {
             startDestination = Home.route,
             modifier = Modifier.padding(innerPadding)
         ) {
-            composable(Home.route) { /* Home Screen UI */ Home.screen}
-            composable(NewOrder.route) { /* Search Screen UI */ NewOrder.screen}
-            composable(Info.route) { /* Profile Screen UI */ Info.screen}
+            composable(Home.route) { Home.screen() }
+            composable(NewOrder.route) { NewOrder.screen() }
+            composable(Info.route) { Info.screen() }
         }
-        //Content(padding = innerPadding)
-    }
-}
-
-@Composable
-fun Content(padding: PaddingValues) {
-    Box(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(16.dp),
-        contentAlignment = Alignment.Center
-    ) {
-        Text("Welcome to the Main Page!")
     }
 }
 

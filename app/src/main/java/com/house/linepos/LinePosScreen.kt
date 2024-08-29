@@ -21,6 +21,11 @@ interface LinePosScreen {
     val description: String?
 }
 
+object Main {
+    val route: String = "main"
+    val screen: @Composable () -> Unit = { MainScreen() }
+}
+
 object LoginPage : LinePosScreen {
     override val icon = Icons.AutoMirrored.Outlined.ExitToApp
     override val route = "login"

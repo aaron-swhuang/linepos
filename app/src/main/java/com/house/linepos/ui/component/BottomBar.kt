@@ -31,7 +31,7 @@ fun LinePosBottomBar(
                 selected = selectedItem == index,
                 onClick = {
                     Log.v(TAG, "${item.route} is clicked")
-                    //selectedItem = index
+                    selectedItem = index
                     navHostController.navigate(item.route) {
                         Log.v(TAG, "navigate to ${item.route}")
                         popUpTo(navHostController.graph.findStartDestination().id){

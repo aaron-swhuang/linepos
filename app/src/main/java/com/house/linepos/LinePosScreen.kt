@@ -10,8 +10,11 @@ import androidx.compose.material.icons.outlined.Settings
 import androidx.compose.material.icons.outlined.ShoppingCart
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.navigation.NavController
 import androidx.navigation.NavHostController
+import com.house.linepos.ui.component.AboutScreen
+import com.house.linepos.ui.component.HomeScreen
+import com.house.linepos.ui.component.InfoScreen
+import com.house.linepos.ui.component.NewOrderScreen
 
 /*
 * TODO: String should be defined in string resource.
@@ -80,7 +83,7 @@ object Home : LinePosScreen {
     override val icon = Icons.Outlined.Home
     override val route = "home"
     override val label = "Home"
-    override val screen: @Composable () -> Unit = { /* TODO: HomeScreen() */ HomeScreen() }
+    override val screen: @Composable () -> Unit = { HomeScreen() }
     override val description = "home screen"
 }
 
@@ -88,7 +91,7 @@ object NewOrder : LinePosScreen {
     override val icon = Icons.Outlined.AddCircle
     override val route = "newOrder"
     override val label = "New Order"
-    override val screen: @Composable () -> Unit = { /* TODO: NewOrderScreen() */ NewOrderScreen() }
+    override val screen: @Composable () -> Unit = { NewOrderScreen() }
     override val description = "create a new order"
 }
 
@@ -96,7 +99,7 @@ object Info : LinePosScreen {
     override val icon = Icons.AutoMirrored.Outlined.List
     override val route = "info"
     override val label = "Info"
-    override val screen: @Composable () -> Unit = { /* TODO: NewOrderScreen() */ InfoScreen() }
+    override val screen: @Composable () -> Unit = { InfoScreen() }
     override val description = "create a new order"
 }
 
@@ -104,7 +107,7 @@ object About : LinePosScreen {
     override val icon = Icons.Outlined.Info
     override val route = "info"
     override val label = "Info"
-    override val screen: @Composable () -> Unit = { /* TODO: NewOrderScreen() */ InfoScreen() }
+    override val screen: @Composable () -> Unit = { AboutScreen() }
     override val description = "create a new order"
 }
 val bottomItems = listOf(Home, NewOrder, Info)

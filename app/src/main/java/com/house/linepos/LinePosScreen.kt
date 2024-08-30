@@ -63,14 +63,6 @@ object LoginPage : LinePosScreenWithNavController {
     }
 }
 
-object Settings : LinePosScreen {
-    override val icon = Icons.Outlined.Settings
-    override val route = "settings"
-    override val label = "Settings"
-    override val screen: @Composable () -> Unit = { /* TODO: SettingsScreen() */ }
-    override val description = "settings"
-}
-
 object ShoppingCart : LinePosScreen {
     override val icon = Icons.Outlined.ShoppingCart
     override val route = "shoppingCart"
@@ -100,14 +92,15 @@ object Info : LinePosScreen {
     override val route = "info"
     override val label = "Info"
     override val screen: @Composable () -> Unit = { InfoScreen() }
-    override val description = "create a new order"
+    override val description = "Info"
 }
 
 object About : LinePosScreen {
     override val icon = Icons.Outlined.Info
-    override val route = "info"
-    override val label = "Info"
+    override val route = "about"
+    override val label = "About"
     override val screen: @Composable () -> Unit = { AboutScreen() }
-    override val description = "create a new order"
+    override val description = "About"
 }
+
 val bottomItems = listOf(Home, NewOrder, Info)

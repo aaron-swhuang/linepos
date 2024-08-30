@@ -27,9 +27,12 @@ fun SettingsDropdownMenu(
             }
         )
         DropdownMenuItem(
-            text = { Text("About") },
+            text = { Text(About.label) },
             trailingIcon = { Icon(About.icon, About.description) },
-            onClick = { /* TODO: navigate to AboutScreen() */ }
+            onClick = {
+                mainNavHostController.navigate((About.route))
+                onDismissRequest()
+            }
         )
     }
 }

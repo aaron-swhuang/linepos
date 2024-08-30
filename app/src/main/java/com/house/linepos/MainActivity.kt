@@ -56,7 +56,6 @@ fun PosApp() {
 @Preview(showBackground = true)
 @Composable
 fun PosAppPreview() {
-    //val navController = TestNavHostController(LocalContext.current)
     PosApp()
 }
 
@@ -92,6 +91,7 @@ fun MainScreen(rootNavController: NavHostController) {
             composable(Info.route) { Info.screen() }
             // SettingsDropdownMenu
             composable(LoginPage.route) { LoginPage.screen(mainNavController) }
+            composable(About.route) { About.screen() }
         }
     }
 }

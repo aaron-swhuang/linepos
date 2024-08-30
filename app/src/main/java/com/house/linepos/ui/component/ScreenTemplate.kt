@@ -56,7 +56,7 @@ fun InfoScreen() {
 
 @Composable
 fun AboutScreen() {
-    Log.v(com.house.linepos.TAG, "Loading...Info screen")
+    Log.v(com.house.linepos.TAG, "Loading...About screen")
     Box(
         modifier = Modifier
             .fillMaxSize()

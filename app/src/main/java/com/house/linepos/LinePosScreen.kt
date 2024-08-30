@@ -103,4 +103,14 @@ object About : LinePosScreen {
     override val description = "About"
 }
 
+// TODO: Currently, this is used by dropdown menu and it does not navigate to
+//       another screen so this should be considered redefine for dropdown menu
+//       or set the icon and description inline.
+object Settings : LinePosScreen {
+    override val icon = Icons.Outlined.Settings
+    override val route = "settings"
+    override val label = "Settings"
+    override val screen: @Composable () -> Unit = { /* TODO: SettingsScreen() */ }
+    override val description = "settings"
+}
 val bottomItems = listOf(Home, NewOrder, Info)

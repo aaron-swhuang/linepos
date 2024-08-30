@@ -17,6 +17,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -47,7 +48,7 @@ fun PosApp() {
     LinePosTheme {
         NavHost(navController = navController, startDestination = LoginPage.route) {
             composable(LoginPage.route) { LoginScreen(navController) }
-            composable(Main.route) { Main.screen() }
+            composable(Main.route) { Main.screen(navController) }
         }
     }
 }
@@ -61,25 +62,36 @@ fun PosAppPreview() {
 
 // TODO: Replace main screen with home screen
 @Composable
-fun MainScreen() {
-    val navController = rememberNavController()
+fun MainScreen(rootNavController: NavHostController) {
+    val mainNavController = rememberNavController()
+    //val currentRoute = rootNavController.currentBackStackEntry?.destination?.route
+    //Log.v(TAG, "current route: ${currentRoute}")
     Scaffold(
         topBar = {
-            LinePosTopBar()
+            //if (currentRoute != LoginPage.route) {
+                LinePosTopBar(
+                    rootNavHostController = rootNavController,
+                    mainNavHostController =  mainNavController
+                )
+            //}
         },
         bottomBar = {
-            LinePosBottomBar(navController)
+            //if (currentRoute != LoginPage.route) {
+                LinePosBottomBar(mainNavController)
+            //}
         }
     ){
         innerPadding ->
         NavHost(
-            navController = navController,
+            navController = mainNavController,
             startDestination = Home.route,
             modifier = Modifier.padding(innerPadding)
         ) {
             composable(Home.route) { Home.screen() }
             composable(NewOrder.route) { NewOrder.screen() }
             composable(Info.route) { Info.screen() }
+            // SettingsDropdownMenu
+            composable(LoginPage.route) { LoginPage.screen(mainNavController) }
         }
     }
 }
@@ -87,7 +99,8 @@ fun MainScreen() {
 @Preview(showBackground = true)
 @Composable
 fun MainScreenPreview() {
-    MainScreen()
+    val navController = TestNavHostController(LocalContext.current)
+    MainScreen(navController)
 }
 
 @Composable

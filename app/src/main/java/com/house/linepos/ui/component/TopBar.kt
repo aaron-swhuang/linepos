@@ -13,9 +13,13 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
+import androidx.navigation.testing.TestNavHostController
 import com.house.linepos.Settings
 import com.house.linepos.ShoppingCart
 import kotlinx.coroutines.delay
@@ -24,7 +28,8 @@ import java.time.format.DateTimeFormatter
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun LinePosTopBar() {
+fun LinePosTopBar(rootNavHostController: NavHostController,
+                  mainNavHostController: NavHostController) {
     var current by remember { mutableStateOf(LocalDateTime.now()) }
 
     LaunchedEffect(Unit) {
@@ -53,12 +58,20 @@ fun LinePosTopBar() {
             }
         },
         actions = {
+            // TODO: show this icon only when there's a new order is active.
             IconButton(onClick = { /* TODO: ShoppingCartScreen */ }) {
                 Icon(imageVector = ShoppingCart.icon, contentDescription = ShoppingCart.description)
             }
-            IconButton(onClick = { /*TODO: SettingsScreen */ }) {
+            var expanded by rememberSaveable { mutableStateOf(false) }
+            IconButton(onClick = { /*TODO: SettingsScreen */ expanded = true}) {
                 Icon(imageVector = Settings.icon, contentDescription = Settings.description)
             }
+            SettingsDropdownMenu(
+                rootNavHostController = rootNavHostController,
+                mainNavHostController = mainNavHostController,
+                expanded = expanded,
+                onDismissRequest = { expanded = false }
+            )
         }
     )
 }
@@ -66,5 +79,6 @@ fun LinePosTopBar() {
 @Preview(showBackground = true)
 @Composable
 fun LinePosTopBarPreview() {
-    LinePosTopBar()
+    val navController = TestNavHostController(LocalContext.current)
+    LinePosTopBar(navController, navController)
 }

@@ -22,7 +22,12 @@ fun SettingsDropdownMenu(
             trailingIcon = { Icon(LoginPage.icon, LoginPage.description) },
             onClick = {
                 /* TODO: logout logic */
-                rootNavHostController.navigate(LoginPage.route)
+                rootNavHostController.navigate(LoginPage.route) {
+                    // Clear all content from stack to avoid that the screen can go back to main
+                    // screen again from login screen.
+                    popUpTo(0) { inclusive = true }
+                    launchSingleTop = true
+                }
                 onDismissRequest()
             }
         )

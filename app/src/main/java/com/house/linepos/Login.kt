@@ -70,7 +70,16 @@ fun LoginScreen(navController: NavController) {
         ) {
             // button: login
             Button(
-                onClick = { /*TODO*/ navController.navigate("main")},
+                onClick = {
+                    /* TODO: Implement login logic */
+                    navController.navigate("main") {
+                        // Pop up all screens from stack, this make the system will not
+                        // return to login screen by the back button after login.
+                        popUpTo(navController.graph.startDestinationId) {
+                            inclusive = true
+                        }
+                    }
+                },
                 modifier = Modifier
                     .weight(1f)
                     .padding(end = 8.dp)

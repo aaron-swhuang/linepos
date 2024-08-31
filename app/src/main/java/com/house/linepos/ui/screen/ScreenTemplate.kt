@@ -1,4 +1,4 @@
-package com.house.linepos.ui.component
+package com.house.linepos.ui.screen
 
 import android.util.Log
 import androidx.compose.foundation.layout.Box

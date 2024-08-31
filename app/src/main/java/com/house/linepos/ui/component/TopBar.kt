@@ -2,7 +2,6 @@ package com.house.linepos.ui.component
 
 import androidx.compose.material3.DrawerState
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.DrawerValue
@@ -24,8 +23,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import androidx.navigation.testing.TestNavHostController
-import com.house.linepos.Settings
-import com.house.linepos.ShoppingCart
+import com.house.linepos.ui.screen.Settings
+import com.house.linepos.ui.screen.ShoppingCart
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch

@@ -1,4 +1,4 @@
-package com.house.linepos
+package com.house.linepos.ui.screen
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -26,6 +26,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import com.house.linepos.R
 import com.house.linepos.ui.theme.LinePosTheme
 
 @Composable

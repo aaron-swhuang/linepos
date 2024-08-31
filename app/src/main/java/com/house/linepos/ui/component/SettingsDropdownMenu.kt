@@ -6,8 +6,8 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
-import com.house.linepos.About
-import com.house.linepos.LoginPage
+import com.house.linepos.ui.screen.About
+import com.house.linepos.ui.screen.LoginPage
 
 @Composable
 fun SettingsDropdownMenu(

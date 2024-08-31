@@ -1,4 +1,4 @@
-package com.house.linepos
+package com.house.linepos.ui.screen
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.outlined.ExitToApp
@@ -11,10 +11,7 @@ import androidx.compose.material.icons.outlined.ShoppingCart
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.navigation.NavHostController
-import com.house.linepos.ui.component.AboutScreen
-import com.house.linepos.ui.component.HomeScreen
-import com.house.linepos.ui.component.InfoScreen
-import com.house.linepos.ui.component.NewOrderScreen
+import com.house.linepos.MainScreen
 
 /*
 * TODO: String should be defined in string resource.

@@ -15,7 +15,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.testing.TestNavHostController
-import com.house.linepos.bottomItems
+import com.house.linepos.ui.screen.bottomItems
 
 val TAG = "LinePOS"
 @Composable

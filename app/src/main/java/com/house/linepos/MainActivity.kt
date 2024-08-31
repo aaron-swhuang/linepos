@@ -22,6 +22,13 @@ import androidx.navigation.testing.TestNavHostController
 import com.house.linepos.ui.component.LinePosBottomBar
 import com.house.linepos.ui.component.LinePosTopBar
 import com.house.linepos.ui.component.NavigationDrawer
+import com.house.linepos.ui.screen.About
+import com.house.linepos.ui.screen.Home
+import com.house.linepos.ui.screen.Info
+import com.house.linepos.ui.screen.LoginPage
+import com.house.linepos.ui.screen.LoginScreen
+import com.house.linepos.ui.screen.Main
+import com.house.linepos.ui.screen.NewOrder
 import com.house.linepos.ui.theme.LinePosTheme
 import kotlinx.coroutines.launch
 

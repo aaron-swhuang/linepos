@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
+    id("com.google.devtools.ksp") version "1.9.20-1.0.14"
 }
 
 android {
@@ -72,4 +73,27 @@ dependencies {
     // Navigation compose
     implementation("androidx.compose.material:material:1.6.8")
     implementation("androidx.navigation:navigation-compose:2.7.7")
+
+    val room_version = "2.6.1"
+
+    implementation("androidx.room:room-runtime:$room_version")
+    implementation("androidx.core:core-ktx:1.12.0")
+    implementation("androidx.room:room-ktx:$room_version")
+    //annotationProcessor("androidx.room:room-compiler:$room_version")
+
+    // To use Kotlin Symbol Processing (KSP)
+    ksp("androidx.room:room-compiler:$room_version")
+
+    // optional - Kotlin Extensions and Coroutines support for Room
+    //implementation("androidx.room:room-ktx:$room_version")
+    // optional - RxJava2 support for Room
+    //implementation("androidx.room:room-rxjava2:$room_version")
+    // optional - RxJava3 support for Room
+    //implementation("androidx.room:room-rxjava3:$room_version")
+    // optional - Guava support for Room, including Optional and ListenableFuture
+    //implementation("androidx.room:room-guava:$room_version")
+    // optional - Test helpers
+    //testImplementation("androidx.room:room-testing:$room_version")
+    // optional - Paging 3 Integration
+    //implementation("androidx.room:room-paging:$room_version")
 }

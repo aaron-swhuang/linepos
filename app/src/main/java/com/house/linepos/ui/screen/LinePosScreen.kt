@@ -16,12 +16,16 @@ import com.house.linepos.MainScreen
 /*
 * TODO: String should be defined in string resource.
 * */
-interface LinePosScreen {
-    val icon: ImageVector
+
+interface SimpleLinePosScreen {
     val route: String
     val label: String
     val screen: @Composable () -> Unit
     val description: String?
+}
+
+interface LinePosScreen : SimpleLinePosScreen {
+    val icon: ImageVector
 }
 
 interface LinePosScreenWithNavController : LinePosScreen {
@@ -62,7 +66,7 @@ object LoginPage : LinePosScreenWithNavController {
 
 object ShoppingCart : LinePosScreen {
     override val icon = Icons.Outlined.ShoppingCart
-    override val route = "shoppingCart"
+    override val route = "shopping_cart"
     override val label = "Shopping Cart"
     override val screen: @Composable () -> Unit = { /* TODO: ShoppingCartScreen() */ }
     override val description = "shopping cart"
@@ -78,7 +82,7 @@ object Home : LinePosScreen {
 
 object NewOrder : LinePosScreen {
     override val icon = Icons.Outlined.AddCircle
-    override val route = "newOrder"
+    override val route = "new_order"
     override val label = "New Order"
     override val screen: @Composable () -> Unit = { NewOrderScreen() }
     override val description = "create a new order"
@@ -98,6 +102,20 @@ object About : LinePosScreen {
     override val label = "About"
     override val screen: @Composable () -> Unit = { AboutScreen() }
     override val description = "About"
+}
+
+object ProductCategory : SimpleLinePosScreen {
+    override val route = "product_category"
+    override val label = "Product Category"
+    override val screen: @Composable () -> Unit = { ProductCategoryScreen() }
+    override val description = "Product category"
+}
+
+object CreateProductCategory : SimpleLinePosScreen {
+    override val route = "create_product_category"
+    override val label = "Create Product Category"
+    override val screen: @Composable () -> Unit = { CreateProductCategory() }
+    override val description = "Create a new product category"
 }
 
 // TODO: Currently, this is used by dropdown menu and it does not navigate to

@@ -15,6 +15,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.testing.TestNavHostController
+import com.house.linepos.ui.screen.NewOrder
 import com.house.linepos.ui.screen.bottomItems
 
 val TAG = "LinePOS"
@@ -40,6 +41,9 @@ fun LinePosBottomBar(
                         }
                         launchSingleTop = true
                         restoreState = true
+                        //if (item.label == NewOrder.label) {
+                        //    restoreState = true
+                        //}
                     }
                 }
             )

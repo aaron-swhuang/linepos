@@ -1,6 +1,7 @@
 package com.house.linepos
 
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
@@ -10,6 +11,7 @@ import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -23,12 +25,14 @@ import com.house.linepos.ui.component.LinePosBottomBar
 import com.house.linepos.ui.component.LinePosTopBar
 import com.house.linepos.ui.component.NavigationDrawer
 import com.house.linepos.ui.screen.About
+import com.house.linepos.ui.screen.CreateProductCategory
 import com.house.linepos.ui.screen.Home
 import com.house.linepos.ui.screen.Info
 import com.house.linepos.ui.screen.LoginPage
 import com.house.linepos.ui.screen.LoginScreen
 import com.house.linepos.ui.screen.Main
 import com.house.linepos.ui.screen.NewOrder
+import com.house.linepos.ui.screen.ProductCategory
 import com.house.linepos.ui.theme.LinePosTheme
 import kotlinx.coroutines.launch
 
@@ -77,7 +81,7 @@ fun MainScreen(rootNavController: NavHostController) {
                 drawerState.close()
             }
             when(selectedItem) {
-                Home.label -> mainNavController.navigate(Home.route)
+                CreateProductCategory.label -> mainNavController.navigate(CreateProductCategory.route)
                 About.label -> mainNavController.navigate(About.route)
             }
         },
@@ -99,6 +103,13 @@ fun MainScreen(rootNavController: NavHostController) {
                     //}
                 }
             ){ innerPadding ->
+                // Use LaunchedEffect to register listener
+                LaunchedEffect(mainNavController) {
+                    mainNavController.addOnDestinationChangedListener { _, destination, _ ->
+                        Log.d(TAG, "Navigated to: ${destination.route}")
+                    }
+                }
+
                 NavigationHost(mainNavController, innerPadding)
             }
         }
@@ -121,6 +132,8 @@ fun NavigationHost(
         // SettingsDropdownMenu
         composable(LoginPage.route) { LoginPage.screen(mainNavController) }
         composable(About.route) { About.screen() }
+        // drawer
+        composable(CreateProductCategory.route) { CreateProductCategory.screen() }
     }
 }
 

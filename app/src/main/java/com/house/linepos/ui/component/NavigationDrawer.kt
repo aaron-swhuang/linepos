@@ -15,7 +15,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.house.linepos.ui.screen.About
+import com.house.linepos.ui.screen.CreateProductCategory
 import com.house.linepos.ui.screen.Home
+import com.house.linepos.ui.screen.ProductCategory
+import com.house.linepos.ui.screen.ProductCategoryScreen
 
 @Composable
 fun NavigationDrawer(
@@ -30,9 +33,9 @@ fun NavigationDrawer(
                 Text("Line POS", modifier = Modifier.padding(16.dp))
                 Divider()
                 NavigationDrawerItem(
-                    label = { Text(Home.label) },
+                    label = { Text(CreateProductCategory.label) },
                     selected = false ,
-                    onClick = { onItemSelected(Home.label) }
+                    onClick = { onItemSelected(CreateProductCategory.label) }
                 )
                 NavigationDrawerItem(
                     label = { Text(About.label) },

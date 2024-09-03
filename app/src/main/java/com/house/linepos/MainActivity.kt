@@ -16,6 +16,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -81,8 +82,21 @@ fun MainScreen(rootNavController: NavHostController) {
                 drawerState.close()
             }
             when(selectedItem) {
-                CreateProductCategory.label -> mainNavController.navigate(CreateProductCategory.route)
-                About.label -> mainNavController.navigate(About.route)
+                CreateProductCategory.label ->
+                    mainNavController.navigate(CreateProductCategory.route) {
+                        popUpTo(mainNavController.graph.findStartDestination().id) {
+                            saveState = true
+                        }
+                        restoreState = true
+                        launchSingleTop = true
+                    }
+                About.label -> mainNavController.navigate(About.route) {
+                    popUpTo(mainNavController.graph.findStartDestination().id) {
+                        saveState = true
+                    }
+                    restoreState = true
+                    launchSingleTop = true
+                }
             }
         },
         content = {

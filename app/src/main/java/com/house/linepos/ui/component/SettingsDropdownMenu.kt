@@ -5,6 +5,7 @@ import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import com.house.linepos.ui.screen.About
 import com.house.linepos.ui.screen.LoginPage
@@ -35,7 +36,13 @@ fun SettingsDropdownMenu(
             text = { Text(About.label) },
             trailingIcon = { Icon(About.icon, About.description) },
             onClick = {
-                mainNavHostController.navigate((About.route))
+                mainNavHostController.navigate((About.route)) {
+                    popUpTo(mainNavHostController.graph.findStartDestination().id) {
+                        saveState = true
+                    }
+                    restoreState = true
+                    launchSingleTop = true
+                }
                 onDismissRequest()
             }
         )

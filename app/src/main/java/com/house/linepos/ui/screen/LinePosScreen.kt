@@ -33,13 +33,6 @@ interface LinePosScreenWithNavController : LinePosScreen {
     fun screen(navController: NavHostController)
 }
 
-/*
-object Main {
-    val route: String = "main"
-    val screen: @Composable () -> Unit = { MainScreen() }
-}
-*/
-
 object Main : LinePosScreenWithNavController {
     override val icon = Icons.AutoMirrored.Outlined.ExitToApp
     override val route = "main"

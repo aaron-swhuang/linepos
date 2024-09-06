@@ -26,14 +26,19 @@ import com.house.linepos.ui.component.LinePosBottomBar
 import com.house.linepos.ui.component.LinePosTopBar
 import com.house.linepos.ui.component.NavigationDrawer
 import com.house.linepos.ui.screen.About
+import com.house.linepos.ui.screen.AboutScreen
 import com.house.linepos.ui.screen.CreateProductCategory
 import com.house.linepos.ui.screen.Home
+import com.house.linepos.ui.screen.HomeScreen
 import com.house.linepos.ui.screen.Info
+import com.house.linepos.ui.screen.InfoScreen
 import com.house.linepos.ui.screen.LoginPage
 import com.house.linepos.ui.screen.LoginScreen
 import com.house.linepos.ui.screen.Main
 import com.house.linepos.ui.screen.NewOrder
+import com.house.linepos.ui.screen.NewOrderScreen
 import com.house.linepos.ui.screen.ProductCategory
+import com.house.linepos.ui.screen.ProductCategoryScreen
 import com.house.linepos.ui.theme.LinePosTheme
 import kotlinx.coroutines.launch
 
@@ -55,7 +60,7 @@ fun PosApp() {
     LinePosTheme {
         NavHost(navController = navController, startDestination = LoginPage.route) {
             composable(LoginPage.route) { LoginScreen(navController) }
-            composable(Main.route) { Main.screen(navController) }
+            composable(Main.route) { MainScreen(navController) }
         }
     }
 }
@@ -140,14 +145,14 @@ fun NavigationHost(
         startDestination = Home.route,
         modifier = Modifier.padding(padding)
     ) {
-        composable(Home.route) { Home.screen() }
-        composable(NewOrder.route) { NewOrder.screen() }
-        composable(Info.route) { Info.screen() }
+        composable(Home.route) { HomeScreen() }
+        composable(NewOrder.route) { NewOrderScreen() }
+        composable(Info.route) { InfoScreen() }
         // SettingsDropdownMenu
-        composable(LoginPage.route) { LoginPage.screen(mainNavController) }
-        composable(About.route) { About.screen() }
+        composable(LoginPage.route) { LoginScreen(mainNavController) }
+        composable(About.route) { AboutScreen() }
         // drawer
-        composable(CreateProductCategory.route) { CreateProductCategory.screen() }
+        composable(CreateProductCategory.route) { ProductCategoryScreen() }
     }
 }
 

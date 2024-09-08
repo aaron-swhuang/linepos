@@ -79,6 +79,12 @@ object About : LinePosRoute {
     override val description = "About"
 }
 
+object Product : BaseLinePosRoute {
+    override val route = "product"
+    override val label = "Create Product"
+    override val description = "Create a new product"
+}
+
 object ProductCategory : BaseLinePosRoute {
     override val route = "product_category"
     override val label = "Product Category"
@@ -89,6 +95,12 @@ object CreateProductCategory : BaseLinePosRoute {
     override val route = "create_product_category"
     override val label = "Create Product Category"
     override val description = "Create a new product category"
+}
+
+object ProductTag : BaseLinePosRoute {
+    override val route = "product_tag"
+    override val label = "Product Tag"
+    override val description = "Product tag"
 }
 
 // TODO: Currently, this is used by dropdown menu and it does not navigate to
@@ -103,4 +115,4 @@ object Settings : LinePosRoute {
 
 val bottomItems = listOf(Home, NewOrder, Info)
 val settingsMenuItems = listOf(Logout, About)
-val drawerItems = listOf(ProductCategory, CreateProductCategory)
+val drawerItems = listOf(Product, ProductTag, ProductCategory, CreateProductCategory)

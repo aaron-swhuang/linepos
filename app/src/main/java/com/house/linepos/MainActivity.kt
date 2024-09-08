@@ -34,6 +34,7 @@ import com.house.linepos.ui.screen.Info
 import com.house.linepos.ui.screen.InfoScreen
 import com.house.linepos.ui.screen.LoginPage
 import com.house.linepos.ui.screen.LoginScreen
+import com.house.linepos.ui.screen.Logout
 import com.house.linepos.ui.screen.Main
 import com.house.linepos.ui.screen.NewOrder
 import com.house.linepos.ui.screen.NewOrderScreen
@@ -61,6 +62,8 @@ fun PosApp() {
         NavHost(navController = navController, startDestination = LoginPage.route) {
             composable(LoginPage.route) { LoginScreen(navController) }
             composable(Main.route) { MainScreen(navController) }
+            // Add navigation graph if Logout from settings.
+            composable(Logout.route) { LoginScreen(navController) }
         }
     }
 }
@@ -82,20 +85,20 @@ fun MainScreen(rootNavController: NavHostController) {
 
     NavigationDrawer(
         drawerState = drawerState,
-        onItemSelected = { selectedItem ->
+        onItemSelected = { route ->
             scope.launch {
                 drawerState.close()
             }
-            when(selectedItem) {
-                CreateProductCategory.label ->
-                    mainNavController.navigate(CreateProductCategory.route) {
+            when(route) {
+                CreateProductCategory.route ->
+                    mainNavController.navigate(route) {
                         popUpTo(mainNavController.graph.findStartDestination().id) {
                             saveState = true
                         }
                         restoreState = true
                         launchSingleTop = true
                     }
-                About.label -> mainNavController.navigate(About.route) {
+                ProductCategory.route -> mainNavController.navigate(route) {
                     popUpTo(mainNavController.graph.findStartDestination().id) {
                         saveState = true
                     }
@@ -118,7 +121,53 @@ fun MainScreen(rootNavController: NavHostController) {
                 },
                 bottomBar = {
                     //if (currentRoute != LoginPage.route) {
-                    LinePosBottomBar(mainNavController)
+                    LinePosBottomBar(
+                        onItemClick = { route ->
+                            Log.v(com.house.linepos.ui.component.TAG, "navigate to ${route}")
+                            when (route) {
+                                Home.route -> {
+                                    mainNavController.navigate(route) {
+                                        popUpTo(mainNavController.graph.findStartDestination().id) {
+                                            Log.v(
+                                                com.house.linepos.ui.component.TAG,
+                                                "${route} save state"
+                                            )
+                                            saveState = true
+                                        }
+                                        launchSingleTop = true
+                                        restoreState = true
+                                    }
+                                }
+                                NewOrder.route -> {
+                                    mainNavController.navigate(route) {
+                                        popUpTo(mainNavController.graph.findStartDestination().id) {
+                                            Log.v(
+                                                com.house.linepos.ui.component.TAG,
+                                                "${route} save state"
+                                            )
+                                            saveState = true
+                                        }
+                                        launchSingleTop = true
+                                        restoreState = true
+                                    }
+                                }
+                                Info.route -> {
+                                    mainNavController.navigate(route) {
+                                        popUpTo(mainNavController.graph.findStartDestination().id) {
+                                            Log.v(
+                                                com.house.linepos.ui.component.TAG,
+                                                "${route} save state"
+                                            )
+                                            saveState = true
+                                        }
+                                        launchSingleTop = true
+                                        restoreState = true
+                                    }
+                                }
+
+                            }
+                        }
+                )
                     //}
                 }
             ){ innerPadding ->
@@ -149,10 +198,10 @@ fun NavigationHost(
         composable(NewOrder.route) { NewOrderScreen() }
         composable(Info.route) { InfoScreen() }
         // SettingsDropdownMenu
-        composable(LoginPage.route) { LoginScreen(mainNavController) }
         composable(About.route) { AboutScreen() }
         // drawer
-        composable(CreateProductCategory.route) { ProductCategoryScreen() }
+        composable(CreateProductCategory.route) { CreateProductCategory() }
+        composable(ProductCategory.route) { ProductCategoryScreen() }
     }
 }
 

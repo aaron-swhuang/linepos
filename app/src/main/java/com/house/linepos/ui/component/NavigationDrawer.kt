@@ -14,11 +14,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.house.linepos.ui.screen.About
-import com.house.linepos.ui.screen.CreateProductCategory
-import com.house.linepos.ui.screen.Home
-import com.house.linepos.ui.screen.ProductCategory
-import com.house.linepos.ui.screen.ProductCategoryScreen
+import com.house.linepos.ui.screen.drawerItems
 
 @Composable
 fun NavigationDrawer(
@@ -32,17 +28,14 @@ fun NavigationDrawer(
             ModalDrawerSheet(modifier = Modifier.width(240.dp)) {
                 Text("Line POS", modifier = Modifier.padding(16.dp))
                 Divider()
-                NavigationDrawerItem(
-                    label = { Text(CreateProductCategory.label) },
-                    selected = false ,
-                    onClick = { onItemSelected(CreateProductCategory.label) }
-                )
-                NavigationDrawerItem(
-                    label = { Text(About.label) },
-                    selected = false ,
-                    onClick = { onItemSelected(About.label) }
-                )
-            } // ModalDrawerSheet
+                drawerItems.forEach { item ->
+                    NavigationDrawerItem(
+                        label = { Text(item.label) },
+                        selected = false,
+                        onClick = { onItemSelected(item.route) }
+                    )
+                }
+            }
         }, // drawer content
         content = content
     ) // ModalNavigationDrawer
@@ -52,7 +45,10 @@ fun NavigationDrawer(
 @Composable
 fun NavigationDrawerPreview() {
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
-    NavigationDrawer(drawerState = drawerState, onItemSelected = { selectedItem ->
-        println("Selected item: $selectedItem")
-    }, content = {})
+    NavigationDrawer(
+        drawerState = drawerState,
+        onItemSelected = { selectedItem ->
+            println("Selected item: $selectedItem")
+        }, content = {}
+    )
 }

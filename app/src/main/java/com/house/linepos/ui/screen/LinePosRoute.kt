@@ -37,6 +37,13 @@ object LoginPage : LinePosRoute {
     override val description = "login screen"
 }
 
+object Logout : LinePosRoute {
+    override val icon = Icons.AutoMirrored.Outlined.ExitToApp
+    override val route = "logout"
+    override val label = "Logout"
+    override val description = "Direct ot login screen"
+}
+
 object ShoppingCart : LinePosRoute {
     override val icon = Icons.Outlined.ShoppingCart
     override val route = "shopping_cart"
@@ -95,3 +102,5 @@ object Settings : LinePosRoute {
 }
 
 val bottomItems = listOf(Home, NewOrder, Info)
+val settingsMenuItems = listOf(Logout, About)
+val drawerItems = listOf(ProductCategory, CreateProductCategory)

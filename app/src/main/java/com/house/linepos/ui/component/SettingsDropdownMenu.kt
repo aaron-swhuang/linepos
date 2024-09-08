@@ -5,46 +5,24 @@ import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.navigation.NavGraph.Companion.findStartDestination
-import androidx.navigation.NavHostController
-import com.house.linepos.ui.screen.About
-import com.house.linepos.ui.screen.LoginPage
+import com.house.linepos.ui.screen.settingsMenuItems
 
 @Composable
 fun SettingsDropdownMenu(
-    rootNavHostController: NavHostController,
-    mainNavHostController: NavHostController,
     expanded:Boolean,
+    onMenuItemClick: (String) -> Unit,
     onDismissRequest: () -> Unit,
 ) {
     DropdownMenu(expanded = expanded, onDismissRequest = onDismissRequest) {
-        DropdownMenuItem(
-            text = { Text("Logout") },
-            trailingIcon = { Icon(LoginPage.icon, LoginPage.description) },
-            onClick = {
-                /* TODO: logout logic */
-                rootNavHostController.navigate(LoginPage.route) {
-                    // Clear all content from stack to avoid that the screen can go back to main
-                    // screen again from login screen.
-                    popUpTo(0) { inclusive = true }
-                    launchSingleTop = true
+        settingsMenuItems.forEach { item ->
+            DropdownMenuItem(
+                text = { Text(item.label) },
+                trailingIcon = { Icon(item.icon, item.description) },
+                onClick = {
+                    onMenuItemClick(item.route)
+                    onDismissRequest()
                 }
-                onDismissRequest()
-            }
-        )
-        DropdownMenuItem(
-            text = { Text(About.label) },
-            trailingIcon = { Icon(About.icon, About.description) },
-            onClick = {
-                mainNavHostController.navigate((About.route)) {
-                    popUpTo(mainNavHostController.graph.findStartDestination().id) {
-                        saveState = true
-                    }
-                    restoreState = true
-                    launchSingleTop = true
-                }
-                onDismissRequest()
-            }
-        )
+            )
+        }
     }
 }

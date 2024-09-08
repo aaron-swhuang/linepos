@@ -21,8 +21,11 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.testing.TestNavHostController
+import com.house.linepos.ui.screen.About
+import com.house.linepos.ui.screen.Logout
 import com.house.linepos.ui.screen.Settings
 import com.house.linepos.ui.screen.ShoppingCart
 import kotlinx.coroutines.CoroutineScope
@@ -86,9 +89,28 @@ fun LinePosTopBar(
                 Icon(imageVector = Settings.icon, contentDescription = Settings.description)
             }
             SettingsDropdownMenu(
-                rootNavHostController = rootNavHostController,
-                mainNavHostController = mainNavHostController,
                 expanded = expanded,
+                onMenuItemClick = { route ->
+                    when(route) {
+                        Logout.route -> {
+                            rootNavHostController.navigate(route) {
+                                // Clear all content from stack to avoid that the screen can go back to main
+                                // screen again from login screen.
+                                popUpTo(0) { inclusive = true }
+                                launchSingleTop = true
+                            }
+                        }
+                        About.route -> {
+                            mainNavHostController.navigate(route) {
+                                popUpTo(mainNavHostController.graph.findStartDestination().id) {
+                                    saveState = true
+                                }
+                                restoreState = true
+                                launchSingleTop = true
+                            }
+                        }
+                    }
+                },
                 onDismissRequest = { expanded = false }
             )
         }

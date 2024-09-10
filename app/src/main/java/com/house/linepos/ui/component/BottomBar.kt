@@ -24,7 +24,10 @@ fun LinePosBottomBar(
                 icon = { Icon(item.icon, item.description) },
                 label = { Text(item.label) },
                 selected = selectedItem == index,
-                onClick = { onItemClick(item.route) }
+                onClick = {
+                    selectedItem = index
+                    onItemClick(item.route)
+                }
             )
         }
     }

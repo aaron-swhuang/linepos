@@ -28,4 +28,10 @@ class ProductCategoryViewModel(private val productCategoryRepository: ProductCat
             productCategoryRepository.delete(productCategory)
         }
     }
+
+    fun getCategoryById(id: Int) {
+        viewModelScope.launch {
+            productCategoryRepository.getCategoryById(id)
+        }
+    }
 }

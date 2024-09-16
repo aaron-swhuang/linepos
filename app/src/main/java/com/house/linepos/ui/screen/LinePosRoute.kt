@@ -81,7 +81,7 @@ object About : LinePosRoute {
 
 object Product : BaseLinePosRoute {
     override val route = "product"
-    override val label = "Create Product"
+    override val label = "Product"
     override val description = "Create a new product"
 }
 
@@ -115,4 +115,4 @@ object Settings : LinePosRoute {
 
 val bottomItems = listOf(Home, NewOrder, Info)
 val settingsMenuItems = listOf(Logout, About)
-val drawerItems = listOf(Product, ProductTag, ProductCategory, CreateProductCategory)
+val drawerItems = listOf(Product, ProductTag, ProductCategory)

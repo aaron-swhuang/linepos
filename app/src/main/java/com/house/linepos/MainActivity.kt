@@ -11,6 +11,7 @@ import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
@@ -22,6 +23,9 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.testing.TestNavHostController
+import com.house.linepos.dao.PosDatabase
+import com.house.linepos.data.LocalProductCategoryRepository
+import com.house.linepos.data.ProductCategoryRepository
 import com.house.linepos.ui.component.LinePosBottomBar
 import com.house.linepos.ui.component.LinePosTopBar
 import com.house.linepos.ui.component.NavigationDrawer
@@ -49,8 +53,25 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
+
+
         setContent {
-            PosApp()
+            val database = PosDatabase.getDatabase(LocalContext.current)
+            val productCategoryDao = database.productCategoryDao()
+            val productCategoryRepository = ProductCategoryRepository(productCategoryDao)
+            CompositionLocalProvider(
+                LocalProductCategoryRepository provides productCategoryRepository
+                /*
+                     If there are many repositories need to use the provider, then just list the
+                     repo here. Such like,
+                     LocalProductRepository provides productRepository,
+                     LocalProductTagRepository provides productTagRepository,
+                     ...
+                 */
+            ) {
+                PosApp()
+            }
+
         }
     }
 }
@@ -184,6 +205,7 @@ fun MainScreen(rootNavController: NavHostController) {
     )
 }
 
+// TODO: Consider moving this method to another file.
 @Composable
 fun NavigationHost(
     mainNavController: NavHostController,
@@ -200,7 +222,6 @@ fun NavigationHost(
         // SettingsDropdownMenu
         composable(About.route) { AboutScreen() }
         // drawer
-        composable(CreateProductCategory.route) { CreateProductCategory() }
         composable(ProductCategory.route) { ProductCategoryScreen() }
     }
 }

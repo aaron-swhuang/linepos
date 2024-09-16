@@ -12,6 +12,6 @@ data class Product (
     val description: String,
     val imagePath: String?,
     val isAvailable: Boolean,
-    val tag: List<Int>?,
+    val tags: List<Int>?,
     val categoryId: Int
 )

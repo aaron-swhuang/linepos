@@ -16,7 +16,7 @@ import com.house.linepos.data.ProductTag
 abstract class PosDatabase : RoomDatabase() {
     //abstract fun productDao(): ProductDao
     abstract fun productCategoryDao(): ProductCategoryDao
-    //abstract fun productTagDao(): ProductTagDao
+    abstract fun productTagDao(): ProductTagDao
 
 
     companion object {
@@ -30,7 +30,10 @@ abstract class PosDatabase : RoomDatabase() {
                     PosDatabase::class.java,
                     "pos_database"
                 )
-                    .fallbackToDestructiveMigration()
+                    // This will destroy database if current data cannot migrate. This can be used
+                    // while in develop phase and remove it before release.
+                    // TODO: add migration.
+                    //.fallbackToDestructiveMigration()
                     .build().also { INSTANCE = it }
             }
         }

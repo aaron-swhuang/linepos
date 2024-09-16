@@ -25,7 +25,9 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.testing.TestNavHostController
 import com.house.linepos.dao.PosDatabase
 import com.house.linepos.data.LocalProductCategoryRepository
+import com.house.linepos.data.LocalProductTagRepository
 import com.house.linepos.data.ProductCategoryRepository
+import com.house.linepos.data.LocalProductTagRepositoryProvider
 import com.house.linepos.ui.component.LinePosBottomBar
 import com.house.linepos.ui.component.LinePosTopBar
 import com.house.linepos.ui.component.NavigationDrawer
@@ -44,6 +46,8 @@ import com.house.linepos.ui.screen.NewOrder
 import com.house.linepos.ui.screen.NewOrderScreen
 import com.house.linepos.ui.screen.ProductCategory
 import com.house.linepos.ui.screen.ProductCategoryScreen
+import com.house.linepos.ui.screen.ProductTag
+import com.house.linepos.ui.screen.ProductTagScreen
 import com.house.linepos.ui.theme.LinePosTheme
 import kotlinx.coroutines.launch
 
@@ -57,10 +61,12 @@ class MainActivity : ComponentActivity() {
 
         setContent {
             val database = PosDatabase.getDatabase(LocalContext.current)
-            val productCategoryDao = database.productCategoryDao()
-            val productCategoryRepository = ProductCategoryRepository(productCategoryDao)
+            val productCategoryRepository = ProductCategoryRepository(database.productCategoryDao())
+            val productTagRepository = LocalProductTagRepository(database.productTagDao())
             CompositionLocalProvider(
-                LocalProductCategoryRepository provides productCategoryRepository
+                LocalProductCategoryRepository provides productCategoryRepository,
+                LocalProductTagRepositoryProvider provides productTagRepository
+
                 /*
                      If there are many repositories need to use the provider, then just list the
                      repo here. Such like,
@@ -111,7 +117,7 @@ fun MainScreen(rootNavController: NavHostController) {
                 drawerState.close()
             }
             when(route) {
-                CreateProductCategory.route ->
+                ProductTag.route ->
                     mainNavController.navigate(route) {
                         popUpTo(mainNavController.graph.findStartDestination().id) {
                             saveState = true
@@ -223,6 +229,7 @@ fun NavigationHost(
         composable(About.route) { AboutScreen() }
         // drawer
         composable(ProductCategory.route) { ProductCategoryScreen() }
+        composable(ProductTag.route) { ProductTagScreen() }
     }
 }
 

@@ -1,6 +1,5 @@
 package com.house.linepos.data
 
-import androidx.lifecycle.LiveData
 import com.house.linepos.dao.ProductCategoryDao
 import kotlinx.coroutines.flow.Flow
 

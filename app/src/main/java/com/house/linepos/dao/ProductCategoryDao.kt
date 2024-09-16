@@ -25,6 +25,5 @@ interface ProductCategoryDao {
     suspend fun getCategoryById(id: Int): ProductCategory?
 
     @Query("SELECT * FROM product_category ORDER BY category ASC")
-    //fun getAllCategories(): LiveData<List<ProductCategory>>
     fun getAllCategories(): Flow<List<ProductCategory>>
 }

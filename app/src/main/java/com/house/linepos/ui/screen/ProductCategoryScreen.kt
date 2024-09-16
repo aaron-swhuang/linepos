@@ -51,9 +51,10 @@ fun ProductCategoryListScreen(
 ) {
     val categories by viewModel.allCategories.observeAsState(emptyList())
     var isEditing by rememberSaveable { mutableStateOf(false) }
-    var currentCategory by rememberSaveable { mutableStateOf<ProductCategory?>(null) }
     var isConfirmingDelete by rememberSaveable { mutableStateOf(false) }
     var isViewing by rememberSaveable { mutableStateOf(false) }
+    var currentCategoryId by rememberSaveable { mutableStateOf<Int?>(null) }
+    var currentCategory by rememberSaveable { mutableStateOf<ProductCategory?>(null) }
 
     // Dialog to handle add/edit actions
     if (isEditing) {
@@ -68,7 +69,7 @@ fun ProductCategoryListScreen(
                     viewModel.update(category)
                 }
                 isEditing = false
-                currentCategory = null
+                currentCategoryId = null
             },
             onDismiss = {
                 isEditing = false
@@ -106,10 +107,13 @@ fun ProductCategoryListScreen(
 
     Column {
         // Add New Category Button
-        Button(onClick = {
+        Button(
+            onClick = {
             isEditing = true
             currentCategory = ProductCategory() // empty category for new entry
-        }) {
+            },
+            modifier = Modifier.padding(bottom = 8.dp)
+        ) {
             Text("Add New Category")
         }
         LazyColumn {
@@ -185,12 +189,16 @@ fun CategoryEditDialog(
                 OutlinedTextField(
                     value = categoryName,
                     onValueChange = { categoryName = it },
-                    label = { Text("Category Name") }
+                    label = { Text("Category Name") },
+                    singleLine = true,
+                    isError = categoryName.isBlank(), // This means that the field must be filled.
+                    placeholder = { Text("Enter category name") }
                 )
                 OutlinedTextField(
                     value = description,
                     onValueChange = { description = it },
-                    label = { Text("Description") }
+                    label = { Text("Description") },
+                    placeholder = { Text("Enter description (optional)") }
                 )
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     Text("Active", modifier = Modifier.padding(end = 12.dp))
@@ -212,7 +220,7 @@ fun CategoryEditDialog(
                             isActive = isActive
                         )
                     )
-                }
+                } // TODO: else show error message
             }) {
                 Text("Confirm")
             }
@@ -224,6 +232,7 @@ fun CategoryEditDialog(
         }
     )
 }
+
 @Composable
 fun ConfirmDeleteDialog(
     category: ProductCategory?,

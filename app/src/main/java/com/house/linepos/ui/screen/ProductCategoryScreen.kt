@@ -26,9 +26,14 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.drawBehind
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.house.linepos.R
 import com.house.linepos.data.LocalProductCategoryRepository
 import com.house.linepos.data.ProductCategory
 import com.house.linepos.data.ViewModelFactory
@@ -148,13 +153,32 @@ fun CategoryItem(
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(8.dp),
+            .padding(2.dp)
+            .drawBehind {
+                val strokeWidth = 2f
+                val y = size.height - strokeWidth / 2
+                drawLine(
+                    color = Color.Gray,
+                    start = Offset(0f, y),
+                    end = Offset(size.width, y),
+                    strokeWidth = strokeWidth
+                )
+            }
+            .padding(2.dp),
+        verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
         Column {
             Text(text = category.category)
         }
-        Row {
+        Row(verticalAlignment = Alignment.CenterVertically) {
+            if (!category.isActive) {
+                Icon(
+                    painter = painterResource(id = R.drawable.ic_block_24dp),
+                    contentDescription = "Block",
+                    tint = Color.Red
+                )
+            }
             // View Button
             IconButton(onClick = { onViewClick(category) }) {
                 Icon(Icons.Default.Search, contentDescription = "View")

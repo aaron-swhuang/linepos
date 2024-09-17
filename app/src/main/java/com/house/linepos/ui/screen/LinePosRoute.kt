@@ -3,7 +3,7 @@ package com.house.linepos.ui.screen
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.outlined.ExitToApp
 import androidx.compose.material.icons.automirrored.outlined.List
-import androidx.compose.material.icons.outlined.AddCircle
+import androidx.compose.material.icons.outlined.Add
 import androidx.compose.material.icons.outlined.Home
 import androidx.compose.material.icons.outlined.Info
 import androidx.compose.material.icons.outlined.Settings
@@ -59,7 +59,7 @@ object Home : LinePosRoute {
 }
 
 object NewOrder : LinePosRoute {
-    override val icon = Icons.Outlined.AddCircle
+    override val icon = Icons.Outlined.Add
     override val route = "new_order"
     override val label = "New Order"
     override val description = "create a new order"

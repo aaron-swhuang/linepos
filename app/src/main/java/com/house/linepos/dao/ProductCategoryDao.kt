@@ -26,4 +26,7 @@ interface ProductCategoryDao {
 
     @Query("SELECT * FROM product_category ORDER BY category ASC")
     fun getAllCategories(): Flow<List<ProductCategory>>
+
+    @Query("SELECT * FROM product_category WHERE isActive = 1")
+    fun getActiveCategories(): Flow<List<ProductCategory>>
 }

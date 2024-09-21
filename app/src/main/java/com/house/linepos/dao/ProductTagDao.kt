@@ -25,4 +25,7 @@ interface ProductTagDao {
 
     @Query("SELECT * FROM product_tag ORDER BY name ASC")
     fun getAllTags(): Flow<List<ProductTag>>
+
+    @Query("SELECT * FROM product_tag WHERE isActive = 1")
+    fun getActiveTags(): Flow<List<ProductTag>>
 }

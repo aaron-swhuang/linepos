@@ -32,4 +32,8 @@ class ProductCategoryRepository(private val productCategoryDao: ProductCategoryD
     fun getAllCategories(): Flow<List<ProductCategory>> {
         return productCategoryDao.getAllCategories()
     }
+
+    fun getActiveCategories(): Flow<List<ProductCategory >> {
+        return productCategoryDao.getActiveCategories()
+    }
 }

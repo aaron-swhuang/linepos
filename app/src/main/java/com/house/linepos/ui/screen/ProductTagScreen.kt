@@ -229,7 +229,14 @@ fun TagEditDialog(
                     Text("Active", modifier = Modifier.padding(end = 12.dp))
                     Switch(
                         checked = isActive,
-                        onCheckedChange = { isActive = it }
+                        onCheckedChange = {
+                            // TODO: Option 1: Remove inactive tag id from product's id list,
+                            //       Option 2: not showing the inactive tag while viewing the
+                            //                 product or editing the product.
+                            //       Option 3: It cannot be set as inactive if there's a product is
+                            //                 available.
+                            isActive = it
+                        }
                     )
                 }
             }

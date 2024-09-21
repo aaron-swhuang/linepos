@@ -24,6 +24,8 @@ class ProductCategoryViewModel(private val productCategoryRepository: ProductCat
     }
 
     fun delete(productCategory: ProductCategory) {
+        // TODO: In the product table, if the data contains data with the removed categoryId,
+        //       the data will be retained but the categoryId needs to be removed from the data.
         viewModelScope.launch {
             productCategoryRepository.delete(productCategory)
         }

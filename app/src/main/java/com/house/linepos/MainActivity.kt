@@ -25,6 +25,8 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.testing.TestNavHostController
 import com.house.linepos.dao.PosDatabase
 import com.house.linepos.data.LocalProductCategoryRepository
+import com.house.linepos.data.LocalProductRepository
+import com.house.linepos.data.LocalProductRepositoryProvider
 import com.house.linepos.data.LocalProductTagRepository
 import com.house.linepos.data.ProductCategoryRepository
 import com.house.linepos.data.LocalProductTagRepositoryProvider
@@ -44,8 +46,10 @@ import com.house.linepos.ui.screen.Logout
 import com.house.linepos.ui.screen.Main
 import com.house.linepos.ui.screen.NewOrder
 import com.house.linepos.ui.screen.NewOrderScreen
+import com.house.linepos.ui.screen.Product
 import com.house.linepos.ui.screen.ProductCategory
 import com.house.linepos.ui.screen.ProductCategoryScreen
+import com.house.linepos.ui.screen.ProductScreen
 import com.house.linepos.ui.screen.ProductTag
 import com.house.linepos.ui.screen.ProductTagScreen
 import com.house.linepos.ui.theme.LinePosTheme
@@ -57,23 +61,15 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-
-
         setContent {
             val database = PosDatabase.getDatabase(LocalContext.current)
+            val productRepository = LocalProductRepository(database.productDao())
             val productCategoryRepository = ProductCategoryRepository(database.productCategoryDao())
             val productTagRepository = LocalProductTagRepository(database.productTagDao())
             CompositionLocalProvider(
                 LocalProductCategoryRepository provides productCategoryRepository,
-                LocalProductTagRepositoryProvider provides productTagRepository
-
-                /*
-                     If there are many repositories need to use the provider, then just list the
-                     repo here. Such like,
-                     LocalProductRepository provides productRepository,
-                     LocalProductTagRepository provides productTagRepository,
-                     ...
-                 */
+                LocalProductTagRepositoryProvider provides productTagRepository,
+                LocalProductRepositoryProvider provides productRepository
             ) {
                 PosApp()
             }
@@ -117,6 +113,14 @@ fun MainScreen(rootNavController: NavHostController) {
                 drawerState.close()
             }
             when(route) {
+                Product.route ->
+                    mainNavController.navigate(route) {
+                        popUpTo(mainNavController.graph.findStartDestination().id) {
+                            saveState = true
+                        }
+                        restoreState = true
+                        launchSingleTop = true
+                    }
                 ProductTag.route ->
                     mainNavController.navigate(route) {
                         popUpTo(mainNavController.graph.findStartDestination().id) {
@@ -228,6 +232,7 @@ fun NavigationHost(
         // SettingsDropdownMenu
         composable(About.route) { AboutScreen() }
         // drawer
+        composable(Product.route) { ProductScreen() }
         composable(ProductCategory.route) { ProductCategoryScreen() }
         composable(ProductTag.route) { ProductTagScreen() }
     }

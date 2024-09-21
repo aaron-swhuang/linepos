@@ -8,4 +8,5 @@ interface ProductTagRepository {
     suspend fun delete(tag: ProductTag)
     suspend fun getTagById(id: Int): ProductTag?
     fun getAllTags(): Flow<List<ProductTag>>
+    fun getActiveTags(): Flow<List<ProductTag>>
 }

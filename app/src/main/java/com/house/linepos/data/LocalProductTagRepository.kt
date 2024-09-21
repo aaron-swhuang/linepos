@@ -23,4 +23,8 @@ class LocalProductTagRepository(private val productTagDao: ProductTagDao) : Prod
     override fun getAllTags(): Flow<List<ProductTag>> {
         return productTagDao.getAllTags()
     }
+
+    override fun getActiveTags(): Flow<List<ProductTag>> {
+        return productTagDao.getActiveTags()
+    }
 }

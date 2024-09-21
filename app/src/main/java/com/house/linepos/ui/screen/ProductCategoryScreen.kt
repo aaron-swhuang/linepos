@@ -228,7 +228,11 @@ fun CategoryEditDialog(
                     Text("Active", modifier = Modifier.padding(end = 12.dp))
                     Switch(
                         checked = isActive,
-                        onCheckedChange = { isActive = it }
+                        onCheckedChange = {
+                            // TODO: Remove category id from product's category field, or block all
+                            //       products that are belong to the inactive category.
+                            isActive = it
+                        }
                     )
                 }
             }

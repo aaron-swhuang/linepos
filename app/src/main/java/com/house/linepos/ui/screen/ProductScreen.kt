@@ -61,7 +61,7 @@ import androidx.navigation.compose.rememberNavController
 import coil.compose.AsyncImage
 import com.house.linepos.R
 import com.house.linepos.data.LocalNavController
-import com.house.linepos.data.LocalProductCategoryRepository
+import com.house.linepos.data.LocalProductCategoryRepositoryProvider
 import com.house.linepos.data.LocalProductRepositoryProvider
 import com.house.linepos.data.LocalProductTagRepositoryProvider
 import com.house.linepos.data.Product
@@ -79,7 +79,7 @@ val TAG = "LinePOS"
 fun ProductScreen() {
     val navController = rememberNavController()
     val productRepo = LocalProductRepositoryProvider.current
-    val categoryRepo = LocalProductCategoryRepository.current
+    val categoryRepo = LocalProductCategoryRepositoryProvider.current
     val tagRepo = LocalProductTagRepositoryProvider.current
     val viewModel: ProductViewModel =
         viewModel(factory = ViewModelFactory(ProductViewModel::class) {

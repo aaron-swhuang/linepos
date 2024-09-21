@@ -25,17 +25,16 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.testing.TestNavHostController
 import com.house.linepos.dao.PosDatabase
 import com.house.linepos.data.LocalProductCategoryRepository
+import com.house.linepos.data.LocalProductCategoryRepositoryProvider
 import com.house.linepos.data.LocalProductRepository
 import com.house.linepos.data.LocalProductRepositoryProvider
 import com.house.linepos.data.LocalProductTagRepository
-import com.house.linepos.data.ProductCategoryRepository
 import com.house.linepos.data.LocalProductTagRepositoryProvider
 import com.house.linepos.ui.component.LinePosBottomBar
 import com.house.linepos.ui.component.LinePosTopBar
 import com.house.linepos.ui.component.NavigationDrawer
 import com.house.linepos.ui.screen.About
 import com.house.linepos.ui.screen.AboutScreen
-import com.house.linepos.ui.screen.CreateProductCategory
 import com.house.linepos.ui.screen.Home
 import com.house.linepos.ui.screen.HomeScreen
 import com.house.linepos.ui.screen.Info
@@ -64,10 +63,10 @@ class MainActivity : ComponentActivity() {
         setContent {
             val database = PosDatabase.getDatabase(LocalContext.current)
             val productRepository = LocalProductRepository(database.productDao())
-            val productCategoryRepository = ProductCategoryRepository(database.productCategoryDao())
+            val productCategoryRepository = LocalProductCategoryRepository(database.productCategoryDao())
             val productTagRepository = LocalProductTagRepository(database.productTagDao())
             CompositionLocalProvider(
-                LocalProductCategoryRepository provides productCategoryRepository,
+                LocalProductCategoryRepositoryProvider provides productCategoryRepository,
                 LocalProductTagRepositoryProvider provides productTagRepository,
                 LocalProductRepositoryProvider provides productRepository
             ) {

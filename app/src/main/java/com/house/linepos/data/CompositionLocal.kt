@@ -5,8 +5,7 @@ import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.navigation.NavController
 
 // Define CompositionLocal variable
-// TODO: Rename to LocalProductCategoryRepositoryProvider
-val LocalProductCategoryRepository = compositionLocalOf<ProductCategoryRepository> {
+val LocalProductCategoryRepositoryProvider = compositionLocalOf<LocalProductCategoryRepository> {
     error("No ProductCategoryRepository provided")
 }
 

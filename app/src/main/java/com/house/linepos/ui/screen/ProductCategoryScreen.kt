@@ -34,14 +34,14 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.house.linepos.R
-import com.house.linepos.data.LocalProductCategoryRepository
+import com.house.linepos.data.LocalProductCategoryRepositoryProvider
 import com.house.linepos.data.ProductCategory
 import com.house.linepos.data.ViewModelFactory
 import com.house.linepos.ui.viewmodel.ProductCategoryViewModel
 
 @Composable
 fun ProductCategoryScreen() {
-    val repository = LocalProductCategoryRepository.current
+    val repository = LocalProductCategoryRepositoryProvider.current
     val viewModel: ProductCategoryViewModel =
         viewModel(factory = ViewModelFactory(ProductCategoryViewModel::class) {
         ProductCategoryViewModel(repository)

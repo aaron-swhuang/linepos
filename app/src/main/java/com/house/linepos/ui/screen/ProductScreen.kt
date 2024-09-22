@@ -396,7 +396,8 @@ fun EditProductScreen(viewModel: ProductViewModel, productId: Int?) {
                                 Log.e(TAG, "delete ${tag.name}, availableTags: ${availableTags}")
                             }
                         )
-                    }
+                    },
+                    modifier = Modifier.padding(2.dp)
                 )
             }
         }

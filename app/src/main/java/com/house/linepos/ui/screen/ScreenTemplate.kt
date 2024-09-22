@@ -16,7 +16,7 @@ import androidx.compose.ui.unit.dp
 * */
 
 @Composable
-fun HomeScreen() {
+fun TemplateHomeScreen() {
     Log.v(com.house.linepos.TAG, "Loading...Home screen")
     Box(
         modifier = Modifier

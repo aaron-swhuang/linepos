@@ -187,7 +187,7 @@ fun ProductItem(
     ) {
         Text(text = product.name, modifier = Modifier.clickable { onItemClick() })
         Row(verticalAlignment = Alignment.CenterVertically) {
-            // If the procut is not available then show a block icon.
+            // If the product is not available then show a block icon.
             if (!product.isAvailable) {
                 Icon(
                     painter = painterResource(id = R.drawable.ic_block_24dp),

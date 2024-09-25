@@ -5,6 +5,7 @@ import android.net.Uri
 import android.util.Log
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -13,6 +14,7 @@ import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -30,6 +32,7 @@ import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.Icon
@@ -59,6 +62,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import coil.compose.AsyncImage
+import coil.compose.AsyncImagePainter
 import com.house.linepos.R
 import com.house.linepos.data.LocalNavController
 import com.house.linepos.data.LocalProductCategoryRepositoryProvider
@@ -73,7 +77,7 @@ import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
 
-val TAG = "LinePOS"
+const val TAG = "LinePOS"
 
 @Composable
 fun ProductScreen() {
@@ -276,7 +280,7 @@ fun EditProductScreen(viewModel: ProductViewModel, productId: Int?) {
             .padding(16.dp)
             .verticalScroll(scrollState) ) {
         Button(
-            onClick = { navController.popBackStack() }
+            onClick = { navController.navigate("productList") }
         ) {
             Text(text = "Back to list")
         }
@@ -506,35 +510,101 @@ fun ViewProductScreen(viewModel: ProductViewModel, productId: Int?) {
     val navController = LocalNavController.current
     LaunchedEffect(productId) {
         productId?.let {
-            viewModel.getProductById(it)
+            viewModel.getProductDetails(it)
         }
     }
-    val product by viewModel.productById.observeAsState()
+    val productDetails by viewModel.productDetails.observeAsState()
+
+    var isImageLoadFailed by rememberSaveable { mutableStateOf(false) }
+    var isImageLoading by rememberSaveable { mutableStateOf(true) }
     Column(Modifier.padding(16.dp)) {
         Button(
-            onClick = { navController.popBackStack() }
+            onClick = { navController.navigate("productList") }
         ) {
             Text(text = "Back to list")
         }
-        product?.let {
+        productDetails?.let {
             Text("Product Name: ${it.name}")
             Text("Description: ${it.description}")
             Text("Price: ${it.price}")
-            Text(
-                "Available: ${if (it.isAvailable) "Yes" else "No"}",
-                color = if (!it.isAvailable) Color.Red else Color.Unspecified
-            )
-            Spacer(modifier = Modifier.height(16.dp))
-
-            it.imagePath?.let { imagePath ->
-                AsyncImage(
-                    model = imagePath,
-                    contentDescription = "Product Image",
-                    modifier = Modifier.size(128.dp)
+            Row {
+                Text("Available: ")
+                Text(
+                    "${if (it.isAvailable) "Yes" else "No"}",
+                    color = if (!it.isAvailable) Color.Red else Color.Unspecified
                 )
-            } ?: Text("No image available")
+            }
+            Row {
+                Text("Category: ")
+                Text(
+                    text = if (it.category?.id != 0) {
+                        "${it.category?.category}"
+                    } else {
+                        "No category assigned"
+                    },
+                    color = if (it.category?.id == 0) Color.Red else Color.Unspecified
+                )
+            }
+            Row {
+                Text("Tags: ")
+                val tagsList = it.tags ?: emptyList()
+                if (tagsList.isEmpty()) {
+                    Text("No tags found", color = Color.Red)
+                } else {
+                    tagsList.forEach { tag ->
+                        Text(text = "#${tag.name} ")
+                    }
+                }
+            }
+
+            Spacer(modifier = Modifier.height(16.dp))
+            Box(contentAlignment = Alignment.Center)
+            {
+                it.imagePath?.let { imagePath ->
+                    if (isImageLoading) {
+                        CircularProgressIndicator()
+                    }
+                    AsyncImage(
+                        model = imagePath,
+                        contentDescription = "Product Image",
+                        modifier = Modifier.size(128.dp),
+                        onState = { state ->
+                            when (state) {
+                                is AsyncImagePainter.State.Success -> {
+                                    isImageLoading = false
+                                    isImageLoadFailed = false
+                                }
+                                is AsyncImagePainter.State.Loading -> {
+                                    isImageLoading = true
+                                }
+                                is AsyncImagePainter.State.Error -> {
+                                    isImageLoading = false
+                                    isImageLoadFailed = true
+                                }
+                                else -> {}
+                            }
+                        })
+                    if (isImageLoadFailed) {
+                        Column {
+                            Image(
+                                painter = painterResource(id = R.drawable.no_image_128dp),
+                                contentDescription = "Placeholder Image",
+                                modifier = Modifier.size(128.dp)
+                            )
+                            Text(
+                                text = "Image not available",
+                                maxLines = 1,
+                                color = Color.Red,
+                                modifier = Modifier
+                                    .padding(top = 8.dp)
+                                    .fillMaxSize()
+                            )
+                        } // End of loading failed column
+                    } // isImageLoadFailed
+                } ?: Text("No image available")
+            } // End of image column
         } ?: Text("Product not found.")
-    }
+    } // End of column
 }
 
 @Composable

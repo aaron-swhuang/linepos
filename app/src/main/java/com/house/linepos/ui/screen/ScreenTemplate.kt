@@ -29,7 +29,7 @@ fun TemplateHomeScreen() {
 }
 
 @Composable
-fun NewOrderScreen() {
+fun TemplateNewOrderScreen() {
     Log.v(com.house.linepos.TAG, "Loading...New order screen")
     Box(
         modifier = Modifier

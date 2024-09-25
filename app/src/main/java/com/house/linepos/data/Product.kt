@@ -15,6 +15,8 @@ data class Product (
     val description: String? = null,
     val imagePath: String? = null,
     val isAvailable: Boolean = true,
+    //val isActive: Boolean = true,
+    //val isDiscontinued: Boolean = false,
     val tags: List<Int>? = null,
     // The product is not expected to be deleted if category does not exist.
     // Thus, categoryId does not need to be set as a foreign key.

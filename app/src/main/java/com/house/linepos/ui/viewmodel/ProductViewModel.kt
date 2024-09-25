@@ -5,22 +5,22 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
+import com.house.linepos.data.LocalProductCategoryRepository
 import com.house.linepos.data.LocalProductRepository
 import com.house.linepos.data.LocalProductTagRepository
 import com.house.linepos.data.Product
 import com.house.linepos.data.ProductCategory
-import com.house.linepos.data.ProductCategoryRepository
 import com.house.linepos.data.ProductTag
 import kotlinx.coroutines.launch
 
 class ProductViewModel(
     private val localProductRepository: LocalProductRepository,
-    private val productCategoryRepository: ProductCategoryRepository,
+    private val localProductCategoryRepository: LocalProductCategoryRepository,
     private val localProductTagRepository: LocalProductTagRepository
 ) : ViewModel() {
     val allProducts: LiveData<List<Product>> = localProductRepository.getAllProducts().asLiveData()
     val activeCategories: LiveData<List<ProductCategory>> =
-        productCategoryRepository.getActiveCategories().asLiveData()
+        localProductCategoryRepository.getActiveCategories().asLiveData()
     val activeTags: LiveData<List<ProductTag>> =
         localProductTagRepository.getActiveTags().asLiveData()
 

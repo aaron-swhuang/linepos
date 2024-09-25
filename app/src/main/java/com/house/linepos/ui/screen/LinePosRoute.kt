@@ -3,9 +3,11 @@ package com.house.linepos.ui.screen
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.outlined.ExitToApp
 import androidx.compose.material.icons.automirrored.outlined.List
+import androidx.compose.material.icons.filled.Notifications
 import androidx.compose.material.icons.outlined.Add
 import androidx.compose.material.icons.outlined.Home
 import androidx.compose.material.icons.outlined.Info
+import androidx.compose.material.icons.outlined.Notifications
 import androidx.compose.material.icons.outlined.Settings
 import androidx.compose.material.icons.outlined.ShoppingCart
 import androidx.compose.ui.graphics.vector.ImageVector
@@ -41,7 +43,14 @@ object Logout : LinePosRoute {
     override val icon = Icons.AutoMirrored.Outlined.ExitToApp
     override val route = "logout"
     override val label = "Logout"
-    override val description = "Direct ot login screen"
+    override val description = "Direct to login screen"
+}
+
+object Notification : LinePosRoute {
+    override val icon = Icons.Outlined.Notifications
+    override val route = "notification"
+    override val label = "Notification"
+    override val description = "Direct to notification screen"
 }
 
 object ShoppingCart : LinePosRoute {
@@ -114,5 +123,5 @@ object Settings : LinePosRoute {
 }
 
 val bottomItems = listOf(Home, NewOrder, Info)
-val settingsMenuItems = listOf(Logout, About)
+val settingsMenuItems = listOf(Notification, Logout, About)
 val drawerItems = listOf(Product, ProductTag, ProductCategory)

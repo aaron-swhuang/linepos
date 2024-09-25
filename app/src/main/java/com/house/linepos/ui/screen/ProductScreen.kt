@@ -505,11 +505,11 @@ private fun deleteImageFromInternalStorage(context: Context, imagePath: String):
 fun ViewProductScreen(viewModel: ProductViewModel, productId: Int?) {
     val navController = LocalNavController.current
     LaunchedEffect(productId) {
-        productId?.let { viewModel.getProductById(it) }
+        productId?.let {
+            viewModel.getProductById(it)
+        }
     }
     val product by viewModel.productById.observeAsState()
-
-
     Column(Modifier.padding(16.dp)) {
         Button(
             onClick = { navController.popBackStack() }

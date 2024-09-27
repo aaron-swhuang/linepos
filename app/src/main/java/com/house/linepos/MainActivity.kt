@@ -24,12 +24,17 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.testing.TestNavHostController
 import com.house.linepos.dao.PosDatabase
+import com.house.linepos.data.LocalOrderItemRepository
+import com.house.linepos.data.LocalOrderItemRepositoryProvider
+import com.house.linepos.data.LocalOrderRepository
+import com.house.linepos.data.LocalOrderRepositoryProvider
 import com.house.linepos.data.LocalProductCategoryRepository
 import com.house.linepos.data.LocalProductCategoryRepositoryProvider
 import com.house.linepos.data.LocalProductRepository
 import com.house.linepos.data.LocalProductRepositoryProvider
 import com.house.linepos.data.LocalProductTagRepository
 import com.house.linepos.data.LocalProductTagRepositoryProvider
+import com.house.linepos.data.OrderRepository
 import com.house.linepos.ui.component.LinePosBottomBar
 import com.house.linepos.ui.component.LinePosTopBar
 import com.house.linepos.ui.component.NavigationDrawer
@@ -65,10 +70,14 @@ class MainActivity : ComponentActivity() {
             val productRepository = LocalProductRepository(database.productDao())
             val productCategoryRepository = LocalProductCategoryRepository(database.productCategoryDao())
             val productTagRepository = LocalProductTagRepository(database.productTagDao())
+            val orderRepository = LocalOrderRepository(database.orderDao())
+            val orderItemRepository = LocalOrderItemRepository(database.orderItemDao())
             CompositionLocalProvider(
                 LocalProductCategoryRepositoryProvider provides productCategoryRepository,
                 LocalProductTagRepositoryProvider provides productTagRepository,
-                LocalProductRepositoryProvider provides productRepository
+                LocalProductRepositoryProvider provides productRepository,
+                LocalOrderRepositoryProvider provides orderRepository,
+                LocalOrderItemRepositoryProvider provides orderItemRepository
             ) {
                 PosApp()
             }

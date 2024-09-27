@@ -17,6 +17,14 @@ val LocalProductRepositoryProvider = compositionLocalOf<LocalProductRepository> 
     error("No ProductRepository provided")
 }
 
+val LocalOrderRepositoryProvider = compositionLocalOf<LocalOrderRepository> {
+    error("No OrderRepository provided")
+}
+
+val LocalOrderItemRepositoryProvider = compositionLocalOf<LocalOrderItemRepository> {
+    error("No OrderItemRepository provided")
+}
+
 // Navigation controller
 val LocalNavController = staticCompositionLocalOf<NavController> {
     error("No NavController provided")

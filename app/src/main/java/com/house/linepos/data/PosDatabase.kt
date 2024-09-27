@@ -1,6 +1,7 @@
 package com.house.linepos.dao
 
 import android.content.Context
+import android.util.Log
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
@@ -8,17 +9,28 @@ import androidx.room.TypeConverters
 import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
 import com.house.linepos.data.Converters
+import com.house.linepos.data.Order
+import com.house.linepos.data.OrderItem
 import com.house.linepos.data.Product
 import com.house.linepos.data.ProductCategory
 import com.house.linepos.data.ProductTag
+import java.io.IOException
 
-@Database(entities = [Product::class, ProductCategory::class, ProductTag::class],
-    version = 2, exportSchema = false)
+@Database(
+    entities = [
+        Product::class,
+        ProductCategory::class,
+        ProductTag::class,
+        Order::class,
+        OrderItem::class],
+    version = 3, exportSchema = false)
 @TypeConverters(Converters::class)
 abstract class PosDatabase : RoomDatabase() {
     abstract fun productDao(): ProductDao
     abstract fun productCategoryDao(): ProductCategoryDao
     abstract fun productTagDao(): ProductTagDao
+    abstract fun orderDao(): OrderDao
+    abstract fun orderItemDao(): OrderItemDao
 
     companion object {
         @Volatile
@@ -61,17 +73,24 @@ abstract class PosDatabase : RoomDatabase() {
             }
         }
 
+        private fun importTable(db: SupportSQLiteDatabase, fname: String) {
+            try {
+                val importTb = context.assets.open(fname)
+                val importSql = importTb.bufferedReader().use { it.readText() }
+                exeSql(db, importSql)
+            } catch (e: IOException) {
+                e.printStackTrace()
+                Log.e("FileError", "Failed to open file: ${e.message}")
+            }
+            //db.execSQL(dataSql)
+        }
+
         override fun onOpen(db: SupportSQLiteDatabase) {
             super.onOpen(db)
             // Load schema.sql and data.sql from assets
-            val inputStreamSchema = context.assets.open("pos_database-product_category.sql")
-            val schemaSql = inputStreamSchema.bufferedReader().use { it.readText() }
-            //db.execSQL(schemaSql)
-            exeSql(db, schemaSql)
-            val inputStreamData = context.assets.open("pos_database-product_tag.sql")
-            val dataSql = inputStreamData.bufferedReader().use { it.readText() }
-            exeSql(db, dataSql)
-            //db.execSQL(dataSql)
+            importTable(db, "pos_database-product_category.sql")
+            importTable(db, "pos_database-product_tag.sql")
+            importTable(db, "pos_database-product.sql")
         }
     }
 }

@@ -12,7 +12,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.tooling.preview.Preview
 import com.house.linepos.ui.screen.bottomItems
 
-val TAG = "LinePOS"
+val TAG = "POS_System"
 @Composable
 fun LinePosBottomBar(
     onItemClick: (String) -> Unit

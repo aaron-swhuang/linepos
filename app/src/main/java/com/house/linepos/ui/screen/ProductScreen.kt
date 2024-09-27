@@ -22,6 +22,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
@@ -56,6 +57,8 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
@@ -77,7 +80,7 @@ import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
 
-const val TAG = "LinePOS"
+const val TAG = "POS_System"
 
 @Composable
 fun ProductScreen() {
@@ -146,13 +149,13 @@ fun ProductListScreen(viewModel: ProductViewModel) {
                     product = product,
                     onItemClick = {
                         navController.navigate("viewProduct/${product.id}")
-                    },
+                                  },
                     onViewClick = {
                         navController.navigate("viewProduct/${product.id}")
-                    },
+                                  },
                     onEditClick = {
                         navController.navigate("editProduct/${product.id}")
-                    },
+                                  },
                     onDeleteClick = {
                         currentProduct = product
                         isConfirmingDelete = true
@@ -250,26 +253,31 @@ fun EditProductScreen(viewModel: ProductViewModel, productId: Int?) {
 
     var name by rememberSaveable { mutableStateOf("") }
     var description by rememberSaveable { mutableStateOf("") }
-    var price by rememberSaveable { mutableStateOf(0.0) }
+    var price by rememberSaveable { mutableStateOf("") }
     var isAvailable by rememberSaveable { mutableStateOf(false) }
     var imagePath by rememberSaveable { mutableStateOf("") }
 
     LaunchedEffect(productId) {
         // viewModel will save the result at the variable productById.
-        productId?.let { viewModel.getProductById(it) }
+        productId?.let {
+            viewModel.getProductById(it)
+            viewModel.getProductDetails(it)
+        }
     }
 
-    val product by viewModel.productById.observeAsState()
-    LaunchedEffect(product) {
-        product?.let {
+    val productDetails by viewModel.productDetails.observeAsState()
+    LaunchedEffect(productDetails) {
+        productDetails?.let {
             name = it.name
-            price = it.price
             description = it.description ?: ""
-            imagePath = it.imagePath ?: ""
+            price = it.price
             isAvailable = it.isAvailable
-            selectedCategory = activeCategories?.find { category -> category.id == it.categoryId }
-            selectedTags = activeTags?.filter { tag -> it.tags?.contains(tag.id) == true }?.toMutableList() ?: mutableListOf()
-            availableTags = activeTags?.filter { tag -> it.tags?.contains(tag.id) == false }?.toMutableList() ?: mutableListOf()
+            imagePath = it.imagePath ?: ""
+            selectedCategory = it.category
+            selectedTags = it.tags?.toMutableList() ?: mutableListOf()
+            availableTags = (viewModel.activeTags.value ?: emptyList())
+                .filter { tag -> selectedTags.none { it.id == tag.id } }
+                .toMutableList()
         }
     }
 
@@ -279,8 +287,7 @@ fun EditProductScreen(viewModel: ProductViewModel, productId: Int?) {
         Modifier
             .padding(16.dp)
             .verticalScroll(scrollState) ) {
-        Button(
-            onClick = { navController.navigate("productList") }
+        Button( onClick = { navController.navigate("productList") }
         ) {
             Text(text = "Back to list")
         }
@@ -296,9 +303,14 @@ fun EditProductScreen(viewModel: ProductViewModel, productId: Int?) {
             label = { Text("Description") }
         )
         TextField(
-            value = price.toString(),
-            onValueChange = { price = it.toDoubleOrNull() ?: 0.0 },
-            label = { Text("Price") }
+            value = price,
+            onValueChange = { price = it },
+            label = { Text("Price") },
+            singleLine = true,
+            keyboardOptions = KeyboardOptions.Default.copy(
+                keyboardType = KeyboardType.Number,
+                imeAction = ImeAction.Next
+            )
         )
         // Select category
         Box {
@@ -462,10 +474,10 @@ fun EditProductScreen(viewModel: ProductViewModel, productId: Int?) {
 
             if (productId == null) {
                 // create new product
-                viewModel.insert(Product(0, name, price, description, imagePath, isAvailable, tagIds, categoryId))
+                viewModel.insert(Product(0, name, price.toDouble(), description, imagePath, isAvailable, tagIds, categoryId))
             } else {
                 // update product
-                viewModel.update(Product(productId, name, price, description, imagePath, isAvailable, tagIds, categoryId))
+                viewModel.update(Product(productId, name, price.toDouble(), description, imagePath, isAvailable, tagIds, categoryId))
             }
             navController.popBackStack()
         }) {
@@ -530,7 +542,7 @@ fun ViewProductScreen(viewModel: ProductViewModel, productId: Int?) {
             Row {
                 Text("Available: ")
                 Text(
-                    "${if (it.isAvailable) "Yes" else "No"}",
+                    text = if (it.isAvailable) "Yes" else "No",
                     color = if (!it.isAvailable) Color.Red else Color.Unspecified
                 )
             }

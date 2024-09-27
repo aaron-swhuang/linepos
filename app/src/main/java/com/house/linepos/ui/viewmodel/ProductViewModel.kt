@@ -1,5 +1,6 @@
 package com.house.linepos.ui.viewmodel
 
+import android.icu.text.DecimalFormat
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -107,14 +108,32 @@ class ProductViewModel(
         }
     }
 
+    private fun toProduct(productDetails: ProductDetails): Product {
+        val tagsList: MutableList<Int> = mutableListOf()
+        productDetails.tags?.forEach { tag ->
+            tagsList.add(tag.id)
+        }
+        return Product(id = productDetails.id,
+            name = productDetails.name,
+            price = productDetails.price.toDouble(),
+            description = productDetails.description,
+            imagePath = productDetails.imagePath,
+            isAvailable = productDetails.isAvailable,
+            categoryId = productDetails.category?.id,
+            tags = tagsList
+        )
+    }
+
     private fun toProductDetails(
         product: Product,
         category: ProductCategory,
         tags: List<ProductTag>): ProductDetails {
+        val df = DecimalFormat("0.##")
+        val price = df.format(product.price)
         return ProductDetails(
             id = product.id,
             name = product.name,
-            price = product.price.toString(), // Double to String
+            price = price, // Double to String
             description = product.description,
             imagePath = product.imagePath,
             isAvailable = product.isAvailable,

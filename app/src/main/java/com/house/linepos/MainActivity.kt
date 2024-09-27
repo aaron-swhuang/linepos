@@ -54,7 +54,7 @@ import com.house.linepos.ui.screen.ProductTagScreen
 import com.house.linepos.ui.theme.LinePosTheme
 import kotlinx.coroutines.launch
 
-val TAG = "LinePOS"
+const val TAG = "POS_System"
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

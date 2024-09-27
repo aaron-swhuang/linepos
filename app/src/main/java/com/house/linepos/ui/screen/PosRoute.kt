@@ -101,12 +101,6 @@ object ProductCategory : BaseLinePosRoute {
     override val description = "Product category"
 }
 
-object CreateProductCategory : BaseLinePosRoute {
-    override val route = "create_product_category"
-    override val label = "Create Product Category"
-    override val description = "Create a new product category"
-}
-
 object ProductTag : BaseLinePosRoute {
     override val route = "product_tag"
     override val label = "Product Tag"

@@ -39,7 +39,7 @@ data class actionItem(
 @Composable
 fun HomeScreen() {
     val items = listOf(
-        actionItem(ImageVector.vectorResource(id = R.drawable.ic_menu_book_24dp), "Menu Book"),
+        actionItem(ImageVector.vectorResource(id = R.drawable.ic_menu_book_24dp), "Menu"),
         actionItem(ImageVector.vectorResource(id = R.drawable.ic_table_restaurant_24dp), "Table"),
     )
     ListActionsScreen(items)

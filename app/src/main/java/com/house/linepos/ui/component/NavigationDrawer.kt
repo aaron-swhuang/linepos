@@ -26,7 +26,7 @@ fun NavigationDrawer(
         drawerState = drawerState,
         drawerContent = {
             ModalDrawerSheet(modifier = Modifier.width(240.dp)) {
-                Text("Line POS", modifier = Modifier.padding(16.dp))
+                Text("POS System", modifier = Modifier.padding(16.dp))
                 Divider()
                 drawerItems.forEach { item ->
                     NavigationDrawerItem(

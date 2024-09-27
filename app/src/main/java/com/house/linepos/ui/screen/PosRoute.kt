@@ -3,7 +3,6 @@ package com.house.linepos.ui.screen
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.outlined.ExitToApp
 import androidx.compose.material.icons.automirrored.outlined.List
-import androidx.compose.material.icons.filled.Notifications
 import androidx.compose.material.icons.outlined.Add
 import androidx.compose.material.icons.outlined.Home
 import androidx.compose.material.icons.outlined.Info
@@ -39,6 +38,21 @@ object LoginPage : PosRoute {
     override val description = "login screen"
 }
 
+object ShoppingCart : PosRoute {
+    override val icon = Icons.Outlined.ShoppingCart
+    override val route = "shopping_cart"
+    override val label = "Shopping Cart"
+    override val description = "shopping cart"
+}
+
+// Settings menu
+object About : PosRoute {
+    override val icon = Icons.Outlined.Info
+    override val route = "about"
+    override val label = "About"
+    override val description = "About"
+}
+
 object Logout : PosRoute {
     override val icon = Icons.AutoMirrored.Outlined.ExitToApp
     override val route = "logout"
@@ -51,13 +65,6 @@ object Notification : PosRoute {
     override val route = "notification"
     override val label = "Notification"
     override val description = "Direct to notification screen"
-}
-
-object ShoppingCart : PosRoute {
-    override val icon = Icons.Outlined.ShoppingCart
-    override val route = "shopping_cart"
-    override val label = "Shopping Cart"
-    override val description = "shopping cart"
 }
 
 // Items of bottom bar
@@ -82,13 +89,7 @@ object Info : PosRoute {
     override val description = "Info"
 }
 
-object About : PosRoute {
-    override val icon = Icons.Outlined.Info
-    override val route = "about"
-    override val label = "About"
-    override val description = "About"
-}
-
+// items of drawer
 object Product : BaseLinePosRoute {
     override val route = "product"
     override val label = "Product"

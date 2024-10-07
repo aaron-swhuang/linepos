@@ -23,7 +23,7 @@ import java.io.IOException
         ProductTag::class,
         Order::class,
         OrderItem::class],
-    version = 3, exportSchema = false)
+    version = 1, exportSchema = false)
 @TypeConverters(Converters::class)
 abstract class PosDatabase : RoomDatabase() {
     abstract fun productDao(): ProductDao

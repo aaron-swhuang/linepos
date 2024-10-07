@@ -24,6 +24,10 @@ class LocalProductRepository(private val productDao: ProductDao) : ProductReposi
         return productDao.getAllProducts()
     }
 
+    override fun getAvailableProducts(): Flow<List<Product>> {
+        return productDao.getAvailableProducts()
+    }
+
     override fun getProductsByCategoryId(): Flow<List<Product>> {
         TODO("Not yet implemented")
     }

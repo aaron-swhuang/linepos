@@ -22,3 +22,16 @@ data class Product (
     // Thus, categoryId does not need to be set as a foreign key.
     val categoryId: Int? = null
 ) : Parcelable
+
+data class ProductDetails(
+    val id: Int = 0,
+    val name: String = "",
+    val price: String = "",
+    val description: String? = null,
+    val imagePath: String? = null,
+    val isAvailable: Boolean = true,
+    //val isActive: Boolean = true,
+    //val isDiscontinued: Boolean = false,
+    val tags: List<ProductTag>? = null,
+    val category: ProductCategory? = null
+)

@@ -27,8 +27,12 @@ data class OrderItem(
     val id: Int,
     val orderId: Int,
     val productId: Int,
+    val productName: String,
     val quantity: Int,
+    val unit: String?,
     val unitPrice: Double,
-    val discountPrice: Double?,
+    val discount: Double?,
+    val promotionId: Int?,
+    val note: String?,
     val totalPrice: Double // quantity * unitPrice
 )

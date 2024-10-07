@@ -26,6 +26,9 @@ interface ProductDao {
     @Query("SELECT * FROM product ORDER BY name ASC")
     fun getAllProducts(): Flow<List<Product>>
 
+    @Query("SELECT * FROM product WHERE isAvailable = 1")
+    fun getAvailableProducts(): Flow<List<Product>>
+
     @Query("SELECT * FROM product ORDER BY categoryId ASC")
     fun getProductsByCategoryId(): Flow<List<Product>>
 }

@@ -1,6 +1,7 @@
 package com.house.linepos.ui.viewmodel
 
 import android.icu.text.DecimalFormat
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -11,22 +12,11 @@ import com.house.linepos.data.LocalProductRepository
 import com.house.linepos.data.LocalProductTagRepository
 import com.house.linepos.data.Product
 import com.house.linepos.data.ProductCategory
+import com.house.linepos.data.ProductDetails
 import com.house.linepos.data.ProductTag
 import kotlinx.coroutines.launch
 
-data class ProductDetails(
-    val id: Int = 0,
-    val name: String = "",
-    val price: String = "",
-    val description: String? = null,
-    val imagePath: String? = null,
-    val isAvailable: Boolean = true,
-    //val isActive: Boolean = true,
-    //val isDiscontinued: Boolean = false,
-    val tags: List<ProductTag>? = null,
-    val category: ProductCategory? = null
-)
-
+const val TAG = "POS_System"
 class ProductViewModel(
     private val localProductRepository: LocalProductRepository,
     private val localProductCategoryRepository: LocalProductCategoryRepository,
@@ -130,6 +120,7 @@ class ProductViewModel(
         tags: List<ProductTag>): ProductDetails {
         val df = DecimalFormat("0.##")
         val price = df.format(product.price)
+
         return ProductDetails(
             id = product.id,
             name = product.name,
